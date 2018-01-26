@@ -240,9 +240,6 @@ def get_action(state_puyo,model,turn,puyos,learning = True):
     state = stage2Binary(state_puyo)
     result = model.predict([map2batch(state),puyos[0].reshape((1,2,5)),puyos[1].reshape((1,2,5))])
 
-    epsilon = 1
-
-
     if epsilon <= np.random.uniform(0,1):
         next_action = (np.argmax(result[0])) #最も値の高いインデックスを選択
     else:
@@ -379,7 +376,7 @@ QmainModel = create_Qmodel()
 QtargetModel = create_Qmodel()
 
 #モデルのロード
-#QmainModel = load_model('learnedModel.h5')
+QmainModel = load_model('learnedModel.h5')
 
 #行動と報酬の記憶メモリ
 memory = Memory()
@@ -455,7 +452,7 @@ for episode in range(EPISODE_NUMBER):
             break
 
 #モデルの保存
-QmainModel.save('learnedModel.h5')
+#QmainModel.save('learnedModel.h5')
 
 plt.plot(rewardList)
 plt.show()
